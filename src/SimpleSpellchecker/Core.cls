@@ -3,6 +3,13 @@ Class SimpleSpellchecker.Core
 
 Parameter LETTERS = {$Listbuild("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")};
 
+/// Add text for the training model.
+ClassMethod Train(term As %String) As %Integer
+{
+	Set ^DICTIONARY(term) = $Get(^DICTIONARY(term)) + 1
+	Quit $Get(^DICTIONARY(term))
+}
+
 /// Given a word, attempts to correct the spelling of that word.
 ClassMethod Correct(word As %String) As %String
 {
@@ -25,7 +32,7 @@ ClassMethod FindCandidate(word As %String, Output maxCount As %Integer = 0, Outp
 {
 	Set:(distance2words = $$$NO) distanceWords = ..EditDistance1(word)
 	Set:(distance2words = $$$YES) distanceWords = ..EditDistance2(..EditDistance1(word))
-	Set correctWord = word
+	Set correctWord = ""
 	Set key = 0
 	While (key'="") {
 		Set value = distanceWords.GetNext(.key)

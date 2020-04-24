@@ -11,24 +11,24 @@ ClassMethod factory() As %ListOfDataTypes
 ClassMethod forcedTrained()
 {
 	Set ^DICTIONARY("beginning") = 143
-    Set ^DICTIONARY("beginnings") = 17
-    Set ^DICTIONARY("reining") = 2
-    Set ^DICTIONARY("begging") = 18
+	Set ^DICTIONARY("beginnings") = 17
+	Set ^DICTIONARY("reining") = 2
+	Set ^DICTIONARY("begging") = 18
 	Set ^DICTIONARY("peeling") = 2
-    Set ^DICTIONARY("spelling") = 4
-    Set ^DICTIONARY("speeding") = 2
-    Set ^DICTIONARY("spoiling") = 7
-    Set ^DICTIONARY("sealing") = 8
-    Set ^DICTIONARY("stealing") = 3
-    Set ^DICTIONARY("spelling") = 4
-    Set ^DICTIONARY("corrected") = 14
-    Set ^DICTIONARY("bicycle") = 1
+	Set ^DICTIONARY("spelling") = 4
+	Set ^DICTIONARY("speeding") = 2
+	Set ^DICTIONARY("spoiling") = 7
+	Set ^DICTIONARY("sealing") = 8
+	Set ^DICTIONARY("stealing") = 3
+	Set ^DICTIONARY("spelling") = 4
+	Set ^DICTIONARY("corrected") = 14
+	Set ^DICTIONARY("bicycle") = 1
 	Set ^DICTIONARY("inconvenient") = 40
-    Set ^DICTIONARY("convient") = 1
-    Set ^DICTIONARY("entry") = 21
-    Set ^DICTIONARY("poetry") = 10
-    Set ^DICTIONARY("perry") = 5
-    Set ^DICTIONARY("petty") = 17
+	Set ^DICTIONARY("convient") = 1
+	Set ^DICTIONARY("entry") = 21
+	Set ^DICTIONARY("poetry") = 10
+	Set ^DICTIONARY("perry") = 5
+	Set ^DICTIONARY("petty") = 17
 }
 
 Method TestAddingCharacter()
@@ -119,6 +119,15 @@ Method TestCorrect()
 	Do $$$AssertEquals(##class(SimpleSpellchecker.Core).Correct("peotry"),"poetry")
 	// transpose + delete
 	Do $$$AssertEquals(##class(SimpleSpellchecker.Core).Correct("peotryy"),"poetry")
+}
+
+Method TestTraining()
+{
+	If ($Get(^DICTIONARY("test")) '= "") {
+		Kill ^DICTIONARY("test")
+	}
+	Do $$$AssertEquals(##class(SimpleSpellchecker.Core).Train("test"), 1)
+	Do $$$AssertEquals($Get(^DICTIONARY("test")), 1)
 }
 
 }
