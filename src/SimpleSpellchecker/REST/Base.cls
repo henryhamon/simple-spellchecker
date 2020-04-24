@@ -1,4 +1,4 @@
-Class Sample.REST.Base Extends %CSP.REST [ System = 3 ]
+Class SimpleSpellchecker.REST.Base Extends %CSP.REST [ System = 3 ]
 {
 
 Parameter CHARSET = "utf-8";
@@ -13,17 +13,17 @@ ClassMethod OnPreDispatch(pUrl As %String, pMethod As %String, ByRef pContinue A
 {
   SET tSC = $$$OK
   TRY {
-    
+
     // Set the return type according to the Accept type in the request. Default is application/json.
     IF ('..AcceptsContentType(..#CONTENTTYPEJSON)) {
       SET tSC = ..ReportHttpStatusCode(..#HTTP406NOTACCEPTABLE), pContinue=0
-      QUIT 
-        } ELSE {   
+      QUIT
+        } ELSE {
       // This always returns json
       SET %response.ContentType=..#CONTENTTYPEJSON
         }
-        
-        
+
+
         // read request object into %DynamicObject format
     IF ((pMethod'="POST") && (pMethod'="PUT")) || (%request.Content="") {
       SET %request.Content = {}
@@ -43,7 +43,7 @@ ClassMethod OnPreDispatch(pUrl As %String, pMethod As %String, ByRef pContinue A
         SET %request.Content = ##class(%Library.DynamicObject).%FromJSON(tContent)
       }
     }
-        
+
   } CATCH ex {
     SET tSC = ex.AsStatus()
   }
@@ -62,7 +62,7 @@ ClassMethod %ProcessResult(pStatus As %Status = {$$$OK}, pResult As %DynamicObje
     } ELSE {
       SET pResult = { "errors": [ { "error": "Unknown error parsing status code" } ] }
     }
-  } 
+  }
   ELSEIF pStatus=1 {
     IF '$isobject(pResult){
       SET pResult = {
@@ -76,7 +76,7 @@ ClassMethod %ProcessResult(pStatus As %Status = {$$$OK}, pResult As %DynamicObje
       "error": (error)
     }
   }
-  
+
   IF pResult.%Extends("%Library.DynamicAbstractObject") {
     WRITE pResult.%ToJSON()
   }
@@ -86,14 +86,14 @@ ClassMethod %ProcessResult(pStatus As %Status = {$$$OK}, pResult As %DynamicObje
   ELSEIF pResult.%Extends("%Stream.Object") {
     DO pResult.OutputToDevice()
   }
-  
+
   QUIT tSC
 }
 
 ClassMethod ReportHttpStatusCode(pHttpStatus, pSC As %Status = {$$$OK}) As %Status
 {
   Set %response.Status=pHttpStatus
-  
+
   If $$$ISERR(pSC) Do ..outputStatus(pSC)
   /*
   If (+pHttpStatus>=400) {
@@ -103,7 +103,7 @@ ClassMethod ReportHttpStatusCode(pHttpStatus, pSC As %Status = {$$$OK}) As %Stat
     }
     Return ..%ProcessResult($$$OK, pResult)
   }*/
-      
+
   Return $$$OK
 }
 
