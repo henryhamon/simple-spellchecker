@@ -44,6 +44,14 @@ ClassMethod TransposingCharacters(word As %String, ByRef results As %ListOfDataT
 /// Substituting any character in the word with another character.
 ClassMethod SubstitutingCharacter(word As %String, ByRef results As %ListOfDataTypes)
 {
+	For idx=1:1:$Length(word) {
+		Set pointer= 0
+		While $ListNext(..#LETTERS, pointer, alphabet) {
+		Set newWord = word
+		Set $Extract(newWord,idx) = alphabet
+		Do results.Insert(newWord)
+		}
+	}
 }
 
 }

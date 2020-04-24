@@ -37,4 +37,14 @@ Method TestTransposingCharacters()
 	Do $$$AssertEquals(list.GetAt(list.Count()), "gusn")
 }
 
+Method TestSubstitutingCharacters()
+{
+	Set list = ..factory()
+	Do $$$AssertTrue(list.Count() = 0)
+	Do ##class(SimpleSpellchecker.Core).SubstitutingCharacter("guns", .list)
+	Do $$$AssertTrue(list.Count() > 1)
+	Do $$$AssertEquals(list.GetAt(1),"auns")
+	Do $$$AssertEquals(list.GetAt(list.Count()), "gunz")
+}
+
 }
