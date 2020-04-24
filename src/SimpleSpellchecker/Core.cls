@@ -3,6 +3,38 @@ Class SimpleSpellchecker.Core
 
 Parameter LETTERS = {$Listbuild("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")};
 
+/// Given a word, attempts to correct the spelling of that word.
+ClassMethod Correct(word As %String) As %String
+{
+	Set word = $ZConvert(word, "l")
+	Quit:($Get(^DICTIONARY(word))'="") word
+	Do ..FindCandidate(word, .maxCount, .correctWord)
+	Do ..FindCandidate(word, .maxCount2, .correctWord2, $$$YES)
+
+	if ($Length(word) < 6) {
+		Quit:(maxCount2 > (100 * maxCount)) correctWord2
+		Quit correctWord
+	}
+	Quit:(maxCount2 > ( 4 * maxCount)) correctWord2
+	Quit correctWord
+}
+
+/// Find the Most probable spelling correction for word.
+/// The correction will be selected by counting the number of times each word appears
+ClassMethod FindCandidate(word As %String, Output maxCount As %Integer = 0, Output correctWord As %String, distance2words As %Boolean = 0) As %Status
+{
+	Set:(distance2words = $$$NO) distanceWords = ..EditDistance1(word)
+	Set:(distance2words = $$$YES) distanceWords = ..EditDistance2(..EditDistance1(word))
+	Set correctWord = word
+	Set key = 0
+	While (key'="") {
+		Set value = distanceWords.GetNext(.key)
+		Continue:(value="")
+		Set wordCount = $Get(^DICTIONARY(value))
+		Set:(wordCount > maxCount) maxCount = wordCount, correctWord = value
+	}
+}
+
 /// Returns the set of all strings 1 edit distance away from the input word.
 ClassMethod EditDistance1(word As %String) As %ListOfDataTypes
 {
