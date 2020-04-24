@@ -31,8 +31,8 @@ RUN \
   set sc = ##class(App.Installer).setup() \
   zn "%SYS" \
   write "Create web application ..." \
-  set webName = "/person" \
-  set webProperties("DispatchClass") = "Sample.PersonREST" \
+  set webName = "/simplespellchecker" \
+  set webProperties("DispatchClass") = "SimpleSpellchecker.API" \
   set webProperties("NameSpace") = "IRISAPP" \
   set webProperties("Enabled") = 1 \
   set webProperties("AutheEnabled") = 32 \
@@ -40,8 +40,8 @@ RUN \
   write sc \
   write "Web application "_webName_" has been created!" \
   Do $system.OBJ.Load("/tmp/deps/zpm.xml", "ck") \
-  zn "IRISAPP" 
-  
+  zn "IRISAPP"
+
 
 # bringing the standard shell back
 SHELL ["/bin/bash", "-c"]

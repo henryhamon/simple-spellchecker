@@ -25,8 +25,8 @@ RUN \
   set sc = ##class(App.Installer).setup() \
   zn "%SYS" \
   write "Create web application ..." \
-  set webName = "/crud" \
-  set webProperties("DispatchClass") = "Sample.PersonREST" \
+  set webName = "/simplespellchecker" \
+  set webProperties("DispatchClass") = "SimpleSpellchecker.API" \
   set webProperties("NameSpace") = "IRISAPP" \
   set webProperties("Enabled") = 1 \
   set webProperties("AutheEnabled") = 32 \

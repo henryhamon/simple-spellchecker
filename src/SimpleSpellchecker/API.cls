@@ -1,7 +1,7 @@
 Class SimpleSpellchecker.API Extends SimpleSpellchecker.REST.Base
 {
 
-Parameter Version = "1.0.6";
+Parameter Version = "1.0.0";
 
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
