@@ -47,4 +47,22 @@ Method TestSubstitutingCharacters()
 	Do $$$AssertEquals(list.GetAt(list.Count()), "gunz")
 }
 
+Method TestEditDistance1()
+{
+	Set list = ##class(SimpleSpellchecker.Core).EditDistance1("guns")
+	Do $$$AssertTrue(list.Count() > 1)
+	Do $$$AssertEquals(list.GetAt(1),"aguns")
+	Do $$$AssertEquals(list.GetAt(list.Count()), "gunz")
+}
+
+Method TestEditDistance2()
+{
+	Set list = ..factory()
+	Set list2 = ##class(SimpleSpellchecker.Core).EditDistance2(.list)
+	Do $$$AssertTrue(list.Count() = 0)
+	Set list = ##class(SimpleSpellchecker.Core).EditDistance1("guns")
+	Do $$$AssertTrue(list.Count() > 1)
+	Do $$$AssertEquals(list.GetAt(1),"aaguns")
+}
+
 }
