@@ -46,17 +46,32 @@ IRISAPP>Do ##class(%UnitTest.Manager).RunTest("","/loadudl")
 
 ## Testing POST request
 
-Create a POST request e.g. in Postman with raw data in JSON. e.g.
+POST request are used to train the model, this REST API exposes two POST requests:
+1. To add words to dictionary
+2. To train using a text
+
+### 1. To add words to dictionary
+
+Prepare a collection of terms, e.g. in Postman with raw data in JSON. e.g.
 
 ```
 {"terms":["poetry","entry"]}
 ```
 
-Adjust the authorisation if needed - it is basic for container with default login and password for IRIR Community edition container
+Adjust the authorisation if needed - it is basic for container with default login and password for IRIS Community edition container
 
 and send the POST request to localhost:52773/simplespellchecker/train/
 
 This will build a dictionary with correctly spelled words.
+
+### 2. To train using a text
+
+Train a dictionary from a text document, just prepare the JSON with a text, e.g.
+```
+{"text":"A very long text here."}
+```
+
+In *Assert* folder has a sample training text document, obtained from Peter Norvig site that you can use to train the language model, it is a concatenation of public domain book excerpts from Project Gutenberg.
 
 ## Testing PUT request
 
