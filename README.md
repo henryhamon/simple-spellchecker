@@ -38,7 +38,7 @@ zpm:USER>install simple-spellchecker
 Open IRIS terminal:
 
 ```
-$ docker-compose exec iris irissession iris
+$ docker-compose exec iris iris session iris
 USER>zn "IRISAPP"
 IRISAPP>Set ^UnitTestRoot = "/opt/irisapp/src/SimpleSpellchecker/UnitTests/"
 IRISAPP>Do ##class(%UnitTest.Manager).RunTest("","/loadudl")
@@ -81,7 +81,7 @@ E.g. we want to add the word _spelling_  Prepare in Postman and send the put req
 localhost:52773/simplespellchecker/train/spelling
 ```
 
-# Testing DELETE request
+## Testing DELETE request
 
 Delete will completely remove a term from dictionary.
 For delete request this REST API expects only the word to delete. E.g. if the _spelling_ the following DELETE call will delete the record:
@@ -89,6 +89,7 @@ For delete request this REST API expects only the word to delete. E.g. if the _s
 ```
 localhost:52773/simplespellchecker/train/spelling
 ```
+
 ## Testing GET requests
 
 To spell check test GET you need to train the dictionary. You can create it with POST request (see above)
@@ -102,7 +103,7 @@ To spell check:
 ```
 localhost:52773/simplespellchecker/:word
 ```
-E.g. To get the correct word for __speling__
+E.g. To get the correct word for _**speling**_
 
 ```
 localhost:52773/simplespellchecker/speling
@@ -122,7 +123,17 @@ localhost:52773/simplespellchecker/train/spelling
 This will return JSON data with the frequency of this term in the dictionary , something like that:
 
 ```
-{"frequency":4,"actions":[{"title":"Remove term from Trained Model","method":"DELETE","href":"/simplespellchecker/train/spelling","fields":[]}]}
+{
+    "frequency": 40,
+    "actions": [
+        {
+            "title": "Remove term from Trained Model",
+            "method": "DELETE",
+            "href": "/simplespellchecker/train/spelling",
+            "fields": []
+        }
+    ]
+}
 ```
 
 You can get swagger Open API 2.0 documentation on:
