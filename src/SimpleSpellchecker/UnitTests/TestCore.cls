@@ -130,4 +130,13 @@ Method TestTraining()
 	Do $$$AssertEquals($Get(^DICTIONARY("test")), 1)
 }
 
+Method TestTrainText()
+{
+	Do ..forcedTrained()
+	Set txt = "Poetry 123 - spelling the corrected form"
+	Do $$$AssertStatusOK(##class(SimpleSpellchecker.Core).TrainText(.count, txt))
+	Do $$$AssertEquals(count, 5)
+	Do $$$AssertEquals($Get(^DICTIONARY("poetry")), 11)
+}
+
 }

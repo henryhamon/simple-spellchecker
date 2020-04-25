@@ -1,11 +1,13 @@
 Class SimpleSpellchecker.API Extends SimpleSpellchecker.REST.Base
 {
 
-Parameter Version = "1.0.0";
+Parameter Version = "1.0.1";
 
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
 <Routes>
+<!-- Build the dictionary with correctly spelled words from a training text document -->
+<Route Url="/train/txt/" Method="POST" Call="TrainText" />
 <!-- Return the Frequency of a Trained Term -->
 <Route Url="/train/:term" Method="GET" Call="GetTrainedTermFreq" />
 <!-- Add Term on Trained Model -->
@@ -149,6 +151,26 @@ ClassMethod DeleteTerm(term As %String) As %Status
 		Set %response.Status = 200
 		Set %response.ContentType = ..#CONTENTTYPEJSON
 
+	} Catch tException {
+		Set:$$$ISOK(tSC) tSC = tException.AsStatus()
+	}
+	Quit tSC
+}
+
+/// Build the dictionary with correctly spelled words from a training text document
+ClassMethod TrainText() As %Status
+{
+	Set tSC = $$$OK
+	Try {
+		Set data = %request.Content
+		Set resp = {}
+		$$$THROWONERROR(tSC, ##class(SimpleSpellchecker.Core).TrainText(.total, data.text))
+		Set resp.imported = total
+
+		Set %response.Status = 200
+		Set %response.ContentType = ..#CONTENTTYPEJSON
+
+		Write resp.%ToJSON()
 	} Catch tException {
 		Set:$$$ISOK(tSC) tSC = tException.AsStatus()
 	}

@@ -10,6 +10,23 @@ ClassMethod Train(term As %String) As %Integer
 	Quit $Get(^DICTIONARY(term))
 }
 
+ClassMethod TrainText(Output wordsCount As %Integer, txt As %String) As %Status
+{
+	Set tSC = $$$OK
+	Try {
+		Set wordsCount = 0
+		Set matcher = ##class(%Regex.Matcher).%New("([a-z]+)")
+		Set matcher.Text = $ZConvert(txt,"l")
+		While matcher.Locate() {
+			Set wordsCount = $Increment(wordsCount)
+			Do ..Train(matcher.Group)
+		}
+	} Catch tException {
+		Set:$$$ISOK(tSC) tSC = tException.AsStatus()
+	}
+	Quit tSC
+}
+
 /// Given a word, attempts to correct the spelling of that word.
 ClassMethod Correct(word As %String) As %String
 {
