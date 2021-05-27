@@ -138,7 +138,7 @@ This will return JSON data with the frequency of this term in the dictionary , s
 
 You can get swagger Open API 2.0 documentation on:
 ```
-localhost:yourport/_spec
+localhost:52773/simplespellchecker/_spec
 ```
 
 
