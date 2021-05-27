@@ -17,13 +17,15 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <!-- Add Multiples Terms on Trained Model -->
 <Route Url="/train/" Method="POST" Call="Train" />
 
+<!-- Swagger specs -->
+<Route Url="/_spec" Method="GET" Call="SwaggerSpec" />
+
 <!-- Search corrected word -->
 <Route Url="/:word" Method="GET" Call="GetCorrection" />
 
 <!-- Server Info -->
 <Route Url="/" Method="GET" Call="GetInfo" Cors="true"/>
-<!-- Swagger specs -->
-<Route Url="/_spec" Method="GET" Call="SwaggerSpec" />
+
 
 </Routes>
 }
