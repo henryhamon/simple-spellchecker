@@ -3,6 +3,10 @@
   <Document name="simple-spellchecker.ZPM">
     <Module>
       <Name>simple-spellchecker</Name>
+<<<<<<< master
+=======
+      <Description>Norvig inspired simple spell checker implementation in InterSystems IRIS</Description>
+>>>>>>> master      
       <Version>1.0.2</Version>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
